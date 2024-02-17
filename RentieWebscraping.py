@@ -36,7 +36,6 @@ def scrape_rent_ie(url):
             # full addresss
             addresses = houses.find('div', class_='sresult_address').h2.a.text.strip()
             propertyInformation.append(str(addresses))
-            print(addresses)
 
             # price per month
             price = houses.find('h4').text.strip()
@@ -44,7 +43,6 @@ def scrape_rent_ie(url):
             pricePerMonthMatches = re.findall(pricePattern, price)
             pricePerMonth = int((pricePerMonthMatches[0]).replace(",",""))
             propertyInformation.append(str(pricePerMonth))
-            print(pricePerMonth)
             
             # Gets Lines of Bedrooms and Bathrooms
             bedroomsAndBathrooms = houses.find('h3').text.strip()
@@ -61,7 +59,6 @@ def scrape_rent_ie(url):
             else:
                 numOfBedrooms = -1
             propertyInformation.append(str(numOfBedrooms))
-            print(numOfBedrooms)
                 
             # Gets Bathrooms
             bathroomPattern = r"(\d+)\s*bathroom"
@@ -74,7 +71,7 @@ def scrape_rent_ie(url):
             else:
                 numOfBathrooms = -1
             propertyInformation.append(str(numOfBathrooms))
-            print(numOfBathrooms)
+          
             
             write_to_csv(propertyInformation)
             
@@ -84,7 +81,11 @@ def scrape_rent_ie(url):
     
         
 # URL of the real estate listings page
+urls =['https://www.rent.ie/houses-to-let/renting_limerick/', 'https://www.rent.ie/houses-to-let/renting_limerick/page_2/', 'https://www.rent.ie/houses-to-let/renting_limerick/page_3/']
 url = 'https://www.rent.ie/houses-to-let/renting_dublin/'
 
 # Call the function to scrape real estate listings
-scrape_rent_ie(url)
+
+# RUN ONCE
+for url in urls:
+    scrape_rent_ie(url)
